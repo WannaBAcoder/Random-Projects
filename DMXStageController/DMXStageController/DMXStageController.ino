@@ -37,6 +37,10 @@ void setup() {
   
   // Set led pin as output pin
   pinMode(ledPin, OUTPUT );
+  pinMode(MOTOR1_A, OUTPUT);
+  pinMode(MOTOR1_B, OUTPUT);
+  pinMode(MOTOR2_A, OUTPUT);
+  pinMode(MOTOR2_B, OUTPUT);
 }
 
 // the loop routine runs over and over again forever:
