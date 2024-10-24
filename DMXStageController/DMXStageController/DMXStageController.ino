@@ -3,7 +3,7 @@
 
 #define DIR_CHANNEL 1
 #define SPEED_CHANNEL 2
-#define MAX_SPEED 150
+#define MAX_SPEED 50
 
 #define MOTOR1_A 2 
 #define MOTOR1_B 3
@@ -30,7 +30,7 @@ uint8_t motor_speed = 0;
 uint8_t current_speed = 0; // Current speed of the motor
 uint8_t target_speed = 0;  // Target speed set by DMX controller
 
-const unsigned long ramp_interval = 100; // Interval in ms to adjust the speed
+const unsigned long ramp_interval = 500; // Interval in ms to adjust the speed
 unsigned long last_ramp_time = 0;
 const uint8_t ramp_step = 5; // Amount to increase/decrease speed per interval
 
@@ -58,7 +58,7 @@ void setup() {
   pinMode(STAT_PIN, OUTPUT);
   
   // Setup timers for PWM with higher frequency (pins 11,12)
-  // setupTimer1ForPWM();
+  setupTimer1ForPWM();
   Serial.begin(115200);
 }
 
@@ -152,7 +152,7 @@ void setupTimer1ForPWM()
   TCCR1B |= _BV(CS11);
 
   // Set the top value (ICR1) to achieve 20 kHz frequency
-  ICR1 = 199;
+  ICR1 = 99;
 }
 
 void OnFrameReceiveComplete (unsigned short channelsReceived)
