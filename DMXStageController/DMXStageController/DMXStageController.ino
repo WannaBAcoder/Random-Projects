@@ -3,10 +3,13 @@
 
 #define DIR_CHANNEL 1
 #define SPEED_CHANNEL 2
-#define MAX_SPEED 50
+#define MAX_SPEED 127
 
 #define MOTOR1_DIR 2 
-#define MOTOR2_DIR 4 
+#define MOTOR2_DIR 5
+#define MOTOR1_PWR_SENSE 3
+#define MOTOR2_PWR_SENSE 4  
+ 
 
 // Pins tied to Timer 1
 #define MOTOR1_PWM 11
@@ -28,7 +31,7 @@ uint8_t motor_speed = 0;
 uint8_t current_speed = 0; // Current speed of the motor
 uint8_t target_speed = 0;  // Target speed set by DMX controller
 
-const unsigned long ramp_interval = 500; // Interval in ms to adjust the speed
+const unsigned long ramp_interval = 200; // Interval in ms to adjust the speed
 unsigned long last_ramp_time = 0;
 const uint8_t ramp_step = 5; // Amount to increase/decrease speed per interval
 
@@ -52,9 +55,22 @@ void setup()
   pinMode(MOTOR2_DIR, OUTPUT);
   pinMode(MOTOR1_PWM, OUTPUT);
   pinMode(MOTOR2_PWM, OUTPUT);
+  pinMode(MOTOR1_PWR_SENSE, INPUT);
+  pinMode(MOTOR2_PWR_SENSE, INPUT);
+  
   pinMode(STAT_PIN, OUTPUT);
+
   
   Serial.begin(115200);
+
+//  while(!(digitalRead(MOTOR1_PWR_SENSE) && digitalRead(MOTOR1_PWR_SENSE)))
+//  {
+//    Serial.println("Check Driver Power");
+//    digitalWrite(ledPin, 1);
+//    delay(250);
+//    digitalWrite(ledPin, 0);
+//    delay(250);
+//  }
 }
 
 // the loop routine runs over and over again forever:
@@ -110,7 +126,7 @@ void adjustSpeed()
 
 void drive_motors(void)
 {
-  digitalWrite(MOTOR1_DIR, motor_dir);
+  digitalWrite(MOTOR1_DIR, !motor_dir);
   digitalWrite(MOTOR2_DIR, motor_dir);
  
   analogWrite(MOTOR1_PWM, current_speed);
