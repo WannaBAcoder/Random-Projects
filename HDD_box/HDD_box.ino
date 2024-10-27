@@ -1,9 +1,9 @@
 #include <Servo.h>
 
 #define OPEN_POSITION 0             // Define open position angle for servo
-#define CLOSED_POSITION 90          // Define closed position angle for servo
-#define BUTTON_PIN 2                // Digital pin connected to push button
-#define SERVO_PIN 9                 // PWM pin connected to servo
+#define CLOSED_POSITION 125          // Define closed position angle for servo
+#define BUTTON_PIN 4                // Digital pin connected to push button
+#define SERVO_PIN 5                 // PWM pin connected to servo
 #define STEP_DELAY 15               // Delay between steps in milliseconds for smooth movement
 
 Servo doorServo;
